@@ -24,7 +24,7 @@ class PlacesItemsScreen extends StatelessWidget {
       itemCount: places.length,
       itemBuilder: (context, index) => Card(
         elevation: 5,
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        margin: const EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
