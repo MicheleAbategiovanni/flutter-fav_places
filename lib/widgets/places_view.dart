@@ -11,14 +11,38 @@ class PlacesViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(place.title),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Center(
-        child: Text(
-          place.title,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: Theme.of(context).colorScheme.onSurface),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Image.file(
+                  place.image,
+                  width: double.infinity,
+                  height: 250,
+                  fit: BoxFit.cover,
+                ),
+                const Positioned(
+                  bottom: 15,
+                  right: 15,
+                  child: Icon(
+                    Icons.room_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              place.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
+            ),
+          ],
         ),
       ),
     );
