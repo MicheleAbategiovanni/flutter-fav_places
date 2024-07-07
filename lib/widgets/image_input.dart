@@ -15,11 +15,10 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File? _selectedImage;
 
-  void _takePicture() async {
+  void _takePicture(ImageSource source) async {
     final imagePicker = ImagePicker();
-    //
     final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.camera, maxWidth: 600);
+        await imagePicker.pickImage(source: source, maxWidth: 600);
 
     if (pickedImage == null) {
       return;
@@ -32,6 +31,36 @@ class _ImageInputState extends State<ImageInput> {
     widget.onPickImage(_selectedImage!);
   }
 
+  void _showPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Libreria'),
+                onTap: () {
+                  _takePicture(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
+                onTap: () {
+                  _takePicture(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,23 +69,27 @@ class _ImageInputState extends State<ImageInput> {
           width: 1,
           color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
         ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       height: 250,
       width: double.infinity,
       alignment: Alignment.center,
       child: _selectedImage == null
           ? TextButton.icon(
-              onPressed: _takePicture,
-              label: const Text('Scatta una foto'),
+              onPressed: () => _showPicker(context),
+              label: const Text('Scatta o seleziona una foto'),
               icon: const Icon(Icons.camera),
             )
-          : GestureDetector(
-              onTap: _takePicture,
-              child: Image.file(
-                _selectedImage!,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+          : ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(9)),
+              child: GestureDetector(
+                onTap: () => _showPicker(context),
+                child: Image.file(
+                  _selectedImage!,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
               ),
             ),
     );
