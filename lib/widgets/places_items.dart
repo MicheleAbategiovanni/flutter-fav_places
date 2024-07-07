@@ -22,16 +22,37 @@ class PlacesItemsScreen extends StatelessWidget {
 
     return ListView.builder(
       itemCount: places.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(
-          places[index].title,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Theme.of(context).colorScheme.onSurface),
+      itemBuilder: (context, index) => Card(
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-        onTap: () => Navigator.pushNamed(context, '/place-view',
-            arguments: places[index]),
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(
+            context,
+            '/place-view',
+            arguments: places[index],
+          ),
+          child: Column(
+            children: [
+              Image.file(
+                places[index].image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 200,
+              ),
+              Text(
+                places[index].title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.onSurface),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
