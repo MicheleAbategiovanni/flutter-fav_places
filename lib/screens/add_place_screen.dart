@@ -37,27 +37,30 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
         title: const Text('Aggiungi un nuovo posto'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            const ImageInput(),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Titolo',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              const ImageInput(),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Titolo',
+                ),
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onSurface),
               ),
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              label: const Text('Aggiungi'),
-              icon: const Icon(Icons.add),
-              onPressed: _savePlace,
-            ),
-          ],
+              const SizedBox(height: 30),
+              ElevatedButton.icon(
+                label: const Text('Aggiungi'),
+                icon: const Icon(Icons.add),
+                onPressed: _savePlace,
+              ),
+            ],
+          ),
         ),
       ),
     );
